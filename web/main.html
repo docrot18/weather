@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Прогноз погоды</title>  <!--p>Название программы</p-->
+    <script type="text/javascript" src="/eel.js"></script>
+    <link rel="icon" type="image/png" href="/icon.png">        <!--p>Иконка программы</p-->
+    <link rel="stylesheet" href="main.css">
+    <link rel="предварительно подключить" href="https://fonts.googleapis.com ">
+    <link rel="предварительное подключение" href="https://fonts.gstatic.com " crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital семейство= <span>Roboto: итал, вес@ 0,100;1,100;1,900</span>&Roboto: итал, вес@ 0,100;1,100;1,900&display=поменять местами"
+          rel="таблица стилей">  <!--p>Шрифт</p-->
+</head>
+<body>
+<body bgcolor="#000" background="gif12.gif"></body>        <!--p>Основной стиль заднего фона</p-->
+<input id="location" type="text" placeholder="Введите город или страну"
+       required="" value="">
+<div>
+    <button id="show">Поиск</button>
+</div>
+<script>
+    function changeBackgroundImage(bgImage) {
+        document.body.style.backgroundImage = "url(" + bgImage + ")";     //Реализация кнопок смены заднего фона
+    }
+</script>
+<div class="buttons">
+    <button onclick="changeBackgroundImage('stil1.jpg');">Фон 1</button>
+    <button onclick="changeBackgroundImage('Stilll2.jpg');">Фон 2</button>
+    <button onclick="changeBackgroundImage('Stiil3.jpg');">Фон 3</button>
+    <button onclick="changeBackgroundImage('Osnov.jpg');">Основное</button>
+</div>
+<button id="button_for_information">   <!--p>Написание поля ввода, кнопки "Поиск" и поле геолокации</p-->
+</button>
+<button id="where_am-I">
+</button>
+<div class="info">
+</div>
+<script src="https://api-maps.yandex.ru/2.1/?apikey=ваш API-ключ&lang=ru_RU&load=Geolink"
+ type="text/javascript"></script>
+<!--p>API ссылка Яндекс карт</p-->
+<script type="text/javascript">
+    window.onload = function () {                                      //Скрипт геолокации
+        jQuery("#where_am-I").text(ymaps.geolocation.city);            //Вывод Города в котором находится пользователь
+    }
+</script>
+<div id="user-city"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    // Асинхронная функция показа погоды которая вызывается из питона в JS
+    async function display_weather() {
+        let place = document.getElementById("location").value; //Обращаемся к Python коду и получаем информацию из поля для ввода местоположения
+        //document.getElementById - Возвращает ссылку на элемент по его идентификатору или ID
+        //ID это - location, то есть место куда пользователь вводит определ. населенный пункт
+        //вызов функции get_weather из Python кода
+        let res = await eel.get_weather(place)();            	//С помощью await, происходит реализация ожидания, пока пользователь не введет данные
+        document.getElementById("button_for_information").innerHTML = res;   //Отображение итоговой информации о городе
+        document.getElementById("button_for_information").innerHTML = res
+    }
+
+    jQuery("#show").on("click", function () {
+        //Отображение погоды при нажатии на кнопку "поиск" благодаря библиотеки JQuery
+        display_weather();
+    });
+</script>
+</body>
+</html>
